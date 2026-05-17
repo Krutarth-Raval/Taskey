@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const api = axios.create({
-    baseURL: 'http://taskey-backend.test/api',
+    baseURL: import.meta.env.VITE_API_BASE_URL || 'http://taskey-backend.test/api',
     headers: {
         'Content-Type': 'application/json',
         'Accept': 'application/json'
