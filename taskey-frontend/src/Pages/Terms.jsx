@@ -1,15 +1,27 @@
 import React from "react";
 import MainLayout from "../layouts/MainLayout";
 import Navbar from "../Components/Navbar";
+import { useNavigate } from "react-router-dom";
+import { ArrowLeft } from "lucide-react";
 
 function Terms() {
+  const navigate = useNavigate();
   return (
-    <MainLayout>
+    <MainLayout hideFooter>
       <div className="min-h-svh bg-background text-foreground pt-32 pb-24 px-6 relative overflow-hidden flex flex-col items-center justify-center">
         {/* Background glowing blob */}
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-foreground/[0.04] rounded-full blur-[100px] pointer-events-none"></div>
 
         <div className="max-w-2xl mx-auto flex flex-col gap-10 relative z-10 select-none text-left w-full">
+
+          {/* Back Button */}
+          <button
+            onClick={() => window.history.state && window.history.state.idx > 0 ? navigate(-1) : navigate("/")}
+            className="self-start flex items-center gap-2 text-[10px] md:text-xs font-black uppercase tracking-widest text-text-secondary hover:text-text-primary transition-all duration-300 group -mb-4"
+          >
+            <ArrowLeft className="w-3.5 h-3.5 group-hover:-translate-x-1 transition-transform" />
+            Back
+          </button>
 
           {/* Document Header */}
           <div className="border-b-2 border-border pb-6 flex flex-col gap-2">

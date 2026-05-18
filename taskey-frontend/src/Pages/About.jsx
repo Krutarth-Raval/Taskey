@@ -1,9 +1,11 @@
 import React from "react";
 import MainLayout from "../layouts/MainLayout";
 import Navbar from "../Components/Navbar";
-import { Shield, Zap, Heart, ArrowRight } from "lucide-react";
+import { Shield, Zap, Heart, ArrowRight, ArrowLeft } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 function About() {
+  const navigate = useNavigate();
   const philosophies = [
     {
       title: "Clarity",
@@ -23,12 +25,21 @@ function About() {
   ];
 
   return (
-    <MainLayout>
+    <MainLayout hideFooter>
       <div className="min-h-svh  bg-background text-foreground relative overflow-hidden flex flex-col items-center justify-center px-6 pt-32 pb-20 select-none">
         {/* Background glowing blob */}
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-foreground/[0.04] rounded-full blur-[100px] pointer-events-none"></div>
 
         <div className="max-w-3xl mx-auto flex flex-col items-center text-center gap-12 md:gap-16 relative z-10 w-full">
+
+          {/* Back Button */}
+          <button
+            onClick={() => window.history.state && window.history.state.idx > 0 ? navigate(-1) : navigate("/")}
+            className="self-start flex items-center gap-2 text-[10px] md:text-xs font-black uppercase tracking-widest text-text-secondary hover:text-text-primary transition-all duration-300 group -mb-6 md:-mb-10"
+          >
+            <ArrowLeft className="w-3.5 h-3.5 group-hover:-translate-x-1 transition-transform" />
+            Back
+          </button>
 
           {/* Header */}
           <div className="flex flex-col items-center gap-3 md:gap-4 max-w-xl">
