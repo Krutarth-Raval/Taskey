@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-import { Mail, Lock, User, ArrowRight, UserPlus } from 'lucide-react'
+import { Mail, Lock, User, ArrowRight, UserPlus, ArrowLeft } from 'lucide-react'
 import { useAuth } from '../context/AuthContext'
 import toast from 'react-hot-toast'
 
@@ -38,6 +38,15 @@ function RegisterPage() {
                 className={`w-full max-w-md transition-all duration-700 ease-out transform ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
                     }`}
             >
+                {/* Back Button */}
+                <button
+                    onClick={() => window.history.state && window.history.state.idx > 0 ? navigate(-1) : navigate("/")}
+                    className="self-start flex items-center gap-2 text-[10px] md:text-xs font-black uppercase tracking-widest text-text-secondary hover:text-text-primary transition-all duration-300 group mb-6"
+                >
+                    <ArrowLeft className="w-3.5 h-3.5 group-hover:-translate-x-1 transition-transform" />
+                    Back
+                </button>
+
                 <div className="mb-8 text-center">
                     <h1 className="font-heading text-3xl md:text-4xl font-bold text-text-primary mb-2">
                         Join Taskey
