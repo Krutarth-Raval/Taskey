@@ -37,7 +37,7 @@ function Home() {
 
     if (loading && hasToken) {
         return (
-            <div className="min-h-screen w-full flex items-center justify-center bg-background text-foreground">
+            <div className="min-h-svh w-full flex items-center justify-center bg-background text-foreground">
                 <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-foreground"></div>
             </div>
         );
@@ -63,7 +63,7 @@ function Home() {
 
     return (
         <MainLayout>
-            <div className="min-h-screen bg-background text-foreground">
+            <div className="min-h-svh bg-background text-foreground">
 
                 {/* Hero */}
                 <section className={`relative overflow-hidden min-h-svh flex flex-col items-center justify-center text-center px-6 py-24 transition-all duration-1000 transform ${mounted ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'}`}>

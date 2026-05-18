@@ -74,7 +74,7 @@ function Users() {
         <MainLayout hideFooter>
             <FloatingNavbar />
 
-            <div className="min-h-screen bg-background text-foreground pt-28 pb-32 px-6">
+            <div className="min-h-svh bg-background text-foreground pt-28 pb-32 px-6">
                 <div className="max-w-4xl mx-auto flex flex-col gap-10">
 
                     {/* Header Search Controls */}

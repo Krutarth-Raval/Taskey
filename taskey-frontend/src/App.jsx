@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Routes, Route, useLocation } from 'react-router-dom'
 import Home from './Pages/Home'
 import './App.css'
@@ -19,6 +19,16 @@ import ProtectedRoute from './Components/ProtectedRoute'
 
 function App() {
   const location = useLocation();
+  const [toastPosition, setToastPosition] = useState('bottom-right');
+
+  useEffect(() => {
+    const updatePosition = () => {
+      setToastPosition(window.innerWidth < 768 ? 'top-center' : 'bottom-right');
+    };
+    updatePosition();
+    window.addEventListener('resize', updatePosition);
+    return () => window.removeEventListener('resize', updatePosition);
+  }, []);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -55,7 +65,7 @@ function App() {
         <Route path="/users" element={<ProtectedRoute adminOnly={true}><Users /></ProtectedRoute>} />
       </Routes>
       <Toaster
-        position="bottom-right"
+        position={toastPosition}
         toastOptions={{
           style: {
             background: 'transparent',
@@ -67,6 +77,7 @@ function App() {
             letterSpacing: '0.15em',
             textTransform: 'uppercase',
             fontFamily: 'inherit',
+            textAlign: toastPosition === 'top-center' ? 'center' : 'right',
           },
           success: {
             style: {
