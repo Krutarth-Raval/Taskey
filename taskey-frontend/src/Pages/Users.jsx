@@ -133,13 +133,17 @@ function Users() {
 
                     {/* Users List with same styling as Tasks list */}
                     <div className="flex flex-col">
-                        {isLoading ? (
+                        {isLoading && (
                             <div className="flex justify-center items-center py-20">
                                 <div className="animate-spin rounded-full h-10 w-10 border-t-2 border-b-2 border-foreground"></div>
                             </div>
-                        ) : displayedUsers.length === 0 ? (
+                        )}
+                        
+                        {!isLoading && displayedUsers.length === 0 && (
                             <p className="text-center text-text-secondary text-xl font-bold mt-10">No users found.</p>
-                        ) : (
+                        )}
+                        
+                        {!isLoading && displayedUsers.length > 0 &&
                             displayedUsers.map(userItem => {
                                 const completionRate = userItem.tasks_count > 0
                                     ? Math.round((userItem.completed_tasks_count / userItem.tasks_count) * 100)
@@ -193,7 +197,7 @@ function Users() {
                                     </div>
                                 );
                             })
-                        )}
+                        }
                     </div>
 
                     {/* Pagination Controls */}
