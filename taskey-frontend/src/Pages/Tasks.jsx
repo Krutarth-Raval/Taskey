@@ -239,7 +239,7 @@ function Tasks() {
                                         </span>
                                         <button
                                             onClick={(e) => handleDeleteTask(e, task)}
-                                            className="p-2 border-2 border-red-500/20 hover:border-red-500 bg-transparent text-red-500 rounded-xl md:rounded-2xl font-black text-base md:text-xl hover:bg-red-500 hover:text-white transition-all duration-300 w-full sm:w-auto flex items-center justify-center gap-2 cursor-pointer"
+                                            className="p-2 border-2 border-red-500/20 hover:border-red-500 bg-transparent text-red-500 rounded-xl transition-all duration-300 flex items-center justify-center cursor-pointer"
                                             title="Delete Task"
                                         >
                                             <Trash2 className="w-5 h-5" />
