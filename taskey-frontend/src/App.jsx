@@ -2,6 +2,7 @@ import React, { useEffect } from 'react'
 import { Routes, Route, useLocation } from 'react-router-dom'
 import Home from './Pages/Home'
 import './App.css'
+import { Toaster } from 'react-hot-toast'
 import RegisterPage from './Pages/Register'
 import Login from './Pages/Login'
 import UserDashboard from './Pages/UserDashboard'
@@ -53,6 +54,34 @@ function App() {
         <Route path="/admin-dashboard" element={<ProtectedRoute adminOnly={true}><AdminDashboard /></ProtectedRoute>} />
         <Route path="/users" element={<ProtectedRoute adminOnly={true}><Users /></ProtectedRoute>} />
       </Routes>
+      <Toaster
+        position="bottom-right"
+        toastOptions={{
+          style: {
+            background: 'transparent',
+            boxShadow: 'none',
+            border: 'none',
+            padding: '16px',
+            fontSize: '11px',
+            fontWeight: '900',
+            letterSpacing: '0.15em',
+            textTransform: 'uppercase',
+            fontFamily: 'inherit',
+          },
+          success: {
+            style: {
+              color: '#22c55e',
+            },
+            icon: null,
+          },
+          error: {
+            style: {
+              color: '#ef4444',
+            },
+            icon: null,
+          },
+        }}
+      />
     </div>
   )
 }
