@@ -1,13 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import MainLayout from "../layouts/MainLayout";
 import FloatingNavbar from "../Components/UI/FloatingNavbar";
-import { Search, X, CheckCircle2, Circle, ChevronLeft, ChevronRight, ChevronDown, Plus } from 'lucide-react';
+import { Search, X, CheckCircle2, Circle, ChevronLeft, ChevronRight, ChevronDown, Plus, Trash2 } from 'lucide-react';
 import api from '../api/axios';
 import toast from 'react-hot-toast';
 
 function Tasks() {
     // Tasks Data
     const [tasks, setTasks] = useState([]);
+    const [isLoading, setIsLoading] = useState(true);
+    const [taskToDelete, setTaskToDelete] = useState(null);
+    const [isDeleting, setIsDeleting] = useState(false);
 
     const capitalizeFirstLetter = (str) => {
         if (!str) return "";
@@ -24,6 +27,8 @@ function Tasks() {
             setTasks(response.data.tasks || []);
         } catch (error) {
             toast.error("Failed to fetch tasks");
+        } finally {
+            setIsLoading(false);
         }
     };
 
@@ -92,6 +97,27 @@ function Tasks() {
             ...prev,
             status: prev.status === "pending" ? "completed" : "pending"
         }));
+    };
+
+    const handleDeleteTask = (e, taskItem) => {
+        e.stopPropagation(); // Prevent opening the edit modal!
+        setTaskToDelete(taskItem);
+    };
+
+    const confirmDeleteTask = async () => {
+        if (!taskToDelete) return;
+        setIsDeleting(true);
+        try {
+            await api.delete(`/tasks/${taskToDelete.id}`);
+            setTasks(prev => prev.filter(t => t.id !== taskToDelete.id));
+            setTaskToDelete(null);
+            setSelectedTask(null);
+            toast.success("Task deleted successfully");
+        } catch (error) {
+            toast.error("Failed to delete task");
+        } finally {
+            setIsDeleting(false);
+        }
     };
 
     return (
@@ -183,7 +209,11 @@ function Tasks() {
 
                     {/* Task List */}
                     <div className="flex flex-col">
-                        {displayedTasks.length === 0 ? (
+                        {isLoading ? (
+                            <div className="flex items-center justify-center py-20">
+                                <div className="animate-spin rounded-full h-10 w-10 border-t-2 border-b-2 border-foreground"></div>
+                            </div>
+                        ) : displayedTasks.length === 0 ? (
                             <p className="text-center text-text-secondary text-xl font-bold mt-10">No tasks found.</p>
                         ) : (
                             displayedTasks.map(task => (
@@ -207,6 +237,13 @@ function Tasks() {
                                         <span className={`text-xs md:text-sm font-black uppercase tracking-widest px-3 py-1.5 md:px-4 md:py-2 rounded-lg border-2 ${task.status === 'completed' ? 'border-green-500/50 text-green-500' : 'border-amber-500/50 text-amber-500'}`}>
                                             {task.status}
                                         </span>
+                                        <button
+                                            onClick={(e) => handleDeleteTask(e, task)}
+                                            className="p-2 border border-border/40 hover:border-red-500 hover:bg-red-500/10 text-text-secondary hover:text-red-500 rounded-xl transition-all duration-300 flex items-center justify-center cursor-pointer"
+                                            title="Delete Task"
+                                        >
+                                            <Trash2 className="w-5 h-5" />
+                                        </button>
                                     </div>
                                 </div>
                             ))
@@ -280,10 +317,17 @@ function Tasks() {
                             placeholder="Add task description here..."
                         />
 
-                        <div className="flex justify-end mt-2 md:mt-4">
+                        <div className="flex flex-col sm:flex-row justify-between items-center gap-4 mt-2 md:mt-4">
+                            <button
+                                onClick={(e) => handleDeleteTask(e, selectedTask)}
+                                className="px-6 py-3 md:px-8 md:py-4 border-2 border-red-500/20 hover:border-red-500 bg-transparent text-red-500 rounded-xl md:rounded-2xl font-black text-base md:text-xl hover:bg-red-500 hover:text-white transition-all duration-300 w-full sm:w-auto flex items-center justify-center gap-2 cursor-pointer"
+                            >
+                                <Trash2 className="w-5 h-5" />
+                                Delete Task
+                            </button>
                             <button
                                 onClick={handleUpdateTask}
-                                className="px-6 py-3 md:px-8 md:py-4 bg-foreground text-background rounded-xl md:rounded-2xl font-black text-base md:text-xl hover:opacity-80 transition-opacity w-full sm:w-auto"
+                                className="px-6 py-3 md:px-8 md:py-4 bg-foreground text-background rounded-xl md:rounded-2xl font-black text-base md:text-xl hover:opacity-90 transition-opacity w-full sm:w-auto flex items-center justify-center cursor-pointer"
                             >
                                 Save Changes
                             </button>
@@ -292,6 +336,46 @@ function Tasks() {
                 </div>
             )}
 
+            {/* Custom Premium Delete Task Reassurance Modal */}
+            {taskToDelete && (
+                <div className="fixed inset-0 z-[150] flex items-center justify-center bg-background/80 backdrop-blur-md transition-all duration-300">
+                    <div className="bg-card border-2 border-border p-6 md:p-8 rounded-3xl max-w-md w-full mx-4 shadow-2xl flex flex-col gap-6 relative select-none animate-in fade-in zoom-in-95 duration-200">
+                        {/* Warning Header */}
+                        <div className="flex flex-col items-center text-center gap-4">
+                            <div className="flex flex-col gap-1">
+                                <h3 className="font-heading text-xl md:text-2xl font-black uppercase tracking-tight text-text-primary">
+                                    Delete Task?
+                                </h3>
+                            </div>
+                        </div>
+
+                        {/* Reassurance Message */}
+                        <p className="text-xs md:text-sm text-text-secondary leading-relaxed text-center">
+                            Are you sure you want to permanently delete the task <strong>"{taskToDelete.title}"</strong>? <strong>This action cannot be undone.</strong>
+                        </p>
+
+                        {/* Action Buttons */}
+                        <div className="flex flex-col gap-2 mt-2">
+                            <button
+                                onClick={confirmDeleteTask}
+                                disabled={isDeleting}
+                                className="w-full py-3 rounded-xl bg-red-500 text-white font-bold text-xs md:text-sm tracking-wider uppercase hover:bg-red-600 transition-colors duration-300 disabled:opacity-50 flex items-center justify-center gap-2 cursor-pointer shadow-md"
+                            >
+                                {isDeleting ? (
+                                    <div className="animate-spin rounded-full h-4 w-4 border-2 border-white border-t-transparent"></div>
+                                ) : "Yes, Delete Task"}
+                            </button>
+                            <button
+                                onClick={() => setTaskToDelete(null)}
+                                disabled={isDeleting}
+                                className="w-full py-3 rounded-xl bg-transparent border border-border/60 hover:bg-border/20 text-text-primary font-bold text-xs md:text-sm tracking-wider uppercase transition-colors duration-300 disabled:opacity-50 cursor-pointer"
+                            >
+                                Cancel
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            )}
         </MainLayout>
     );
 }
