@@ -40,7 +40,7 @@ function RegisterPage() {
             >
                 {/* Back Button */}
                 <button
-                    onClick={() => window.history.state && window.history.state.idx > 0 ? navigate(-1) : navigate("/")}
+                    onClick={() => navigate("/")}
                     className="self-start flex items-center gap-2 text-[10px] md:text-xs font-black uppercase tracking-widest text-text-secondary hover:text-text-primary transition-all duration-300 group mb-6"
                 >
                     <ArrowLeft className="w-3.5 h-3.5 group-hover:-translate-x-1 transition-transform" />
