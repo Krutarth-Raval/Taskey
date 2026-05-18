@@ -31,7 +31,7 @@ function Footer() {
             {/* Social Icons */}
             <div className="flex items-center gap-4 mt-2">
               <a
-                href="https://github.com/Krutarth-Raval/Taskey"
+                href="https://github.com/Krutarth-Raval"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="p-2 border border-border/40 rounded-lg text-text-secondary hover:text-foreground hover:bg-border/30 transition-all duration-300 flex items-center justify-center"
@@ -42,7 +42,7 @@ function Footer() {
                 </svg>
               </a>
               <a
-                href="https://twitter.com"
+                href="https://x.com/_KrutarthRaval_"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="p-2 border border-border/40 rounded-lg text-text-secondary hover:text-foreground hover:bg-border/30 transition-all duration-300 flex items-center justify-center"
@@ -53,7 +53,7 @@ function Footer() {
                 </svg>
               </a>
               <a
-                href="https://linkedin.com"
+                href="https://www.linkedin.com/in/raval-krutarth"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="p-2 border border-border/40 rounded-lg text-text-secondary hover:text-foreground hover:bg-border/30 transition-all duration-300 flex items-center justify-center"
