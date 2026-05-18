@@ -65,8 +65,10 @@ function Profile() {
         try {
             await api.delete('/delete-account');
             toast.success("Account deleted successfully");
-            logout();
             navigate('/');
+            setTimeout(async () => {
+                await logout();
+            }, 100);
         } catch (error) {
             toast.error("Failed to delete account");
         } finally {
@@ -76,8 +78,10 @@ function Profile() {
     };
 
     const handleLogout = async () => {
+        setTimeout(async () => {
+            await logout();
+        }, 100);
         navigate('/');
-        await logout();
     };
 
     const userData = {

@@ -17,8 +17,10 @@ function Navbar() {
 
   const handleLogout = async () => {
     setShowLogoutModal(false);
+    setTimeout(async () => {
+      await logout();
+    }, 100);
     navigate('/');
-    await logout();
   };
 
   return (
@@ -35,8 +37,8 @@ function Navbar() {
 
           <div className="flex items-center gap-4">
             {!isLoggedIn ? (
-              <Link 
-                to="/login" 
+              <Link
+                to="/login"
                 className="text-[11px] md:text-xs font-black uppercase tracking-widest text-text-primary hover:opacity-70 transition-opacity px-4 py-2 border border-border/40 rounded-xl"
               >
                 Login
