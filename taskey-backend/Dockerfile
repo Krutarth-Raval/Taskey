@@ -1,10 +1,16 @@
-FROM php:8.2-cli
+FROM php:8.3-cli
 
+# Install system dependencies needed by Composer
 RUN apt-get update && apt-get install -y \
     git \
     unzip \
-    libpq-dev \
-    && docker-php-ext-install pdo pdo_pgsql
+    && rm -rf /var/lib/apt/lists/*
+
+# Copy the extension installer from the official image
+COPY --from=mlocati/php-extension-installer /usr/bin/install-php-extensions /usr/local/bin/
+
+# Install PHP extensions reliably and efficiently
+RUN install-php-extensions pdo pdo_pgsql
 
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
