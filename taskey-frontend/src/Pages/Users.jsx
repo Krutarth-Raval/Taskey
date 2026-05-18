@@ -138,11 +138,11 @@ function Users() {
                                 <div className="animate-spin rounded-full h-10 w-10 border-t-2 border-b-2 border-foreground"></div>
                             </div>
                         )}
-                        
+
                         {!isLoading && displayedUsers.length === 0 && (
                             <p className="text-center text-text-secondary text-xl font-bold mt-10">No users found.</p>
                         )}
-                        
+
                         {!isLoading && displayedUsers.length > 0 &&
                             displayedUsers.map(userItem => {
                                 const completionRate = userItem.tasks_count > 0
@@ -161,9 +161,8 @@ function Users() {
                                                 <h4 className="text-base sm:text-lg md:text-3xl font-black truncate text-text-primary">
                                                     {userItem.name || "N/A"}
                                                 </h4>
-                                                <span className={`text-[9px] md:text-[10px] font-black uppercase tracking-widest px-2.5 py-0.5 rounded-full border shrink-0 ${
-                                                    userItem.role === 'admin' ? 'bg-foreground text-background border-foreground' : 'text-text-secondary border-border'
-                                                }`}>
+                                                <span className={`text-[9px] md:text-[10px] font-black uppercase tracking-widest px-2.5 py-0.5 rounded-full border shrink-0 ${userItem.role === 'admin' ? 'bg-foreground text-background border-foreground' : 'text-text-secondary border-border'
+                                                    }`}>
                                                     {userItem.role === 'admin' ? 'Admin' : 'Member'}
                                                 </span>
                                             </div>
@@ -243,9 +242,8 @@ function Users() {
                                         <h2 className="font-heading text-2xl md:text-4xl font-black uppercase tracking-tight text-text-primary break-words max-w-[85%]">
                                             {selectedUser.name || "N/A"}
                                         </h2>
-                                        <span className={`text-[9px] md:text-[10px] font-black uppercase tracking-widest px-2.5 py-0.5 rounded-full border shrink-0 ${
-                                            selectedUser.role === 'admin' ? 'bg-foreground text-background border-foreground' : 'text-text-secondary border-border'
-                                        }`}>
+                                        <span className={`text-[9px] md:text-[10px] font-black uppercase tracking-widest px-2.5 py-0.5 rounded-full border shrink-0 ${selectedUser.role === 'admin' ? 'bg-foreground text-background border-foreground' : 'text-text-secondary border-border'
+                                            }`}>
                                             {selectedUser.role === 'admin' ? 'Admin' : 'Member'}
                                         </span>
                                     </div>
@@ -263,7 +261,7 @@ function Users() {
                                     <div className="flex justify-between items-center py-2.5">
                                         <span className="text-xs md:text-sm font-bold uppercase tracking-widest text-text-secondary">Registration Date</span>
                                         <span className="text-sm md:text-lg font-black text-text-primary flex items-center gap-2">
-                                            <Calendar className="w-4 h-4 text-text-secondary" />
+
                                             {selectedUser.created_at ? new Date(selectedUser.created_at).toLocaleDateString(undefined, { year: 'numeric', month: 'long', day: 'numeric' }) : 'N/A'}
                                         </span>
                                     </div>
@@ -272,7 +270,7 @@ function Users() {
                                     <div className="flex justify-between items-center py-2.5">
                                         <span className="text-xs md:text-sm font-bold uppercase tracking-widest text-text-secondary">Access Permission</span>
                                         <span className="text-sm md:text-lg font-black text-text-primary flex items-center gap-2">
-                                            <Shield className="w-4 h-4 text-text-secondary" />
+
                                             {selectedUser.role === 'admin' ? 'Administrator' : 'Standard Member'}
                                         </span>
                                     </div>
@@ -307,15 +305,13 @@ function Users() {
                                             </div>
                                             <div className="w-full h-3 bg-foreground/10 border border-border/40 rounded-full overflow-hidden">
                                                 <div
-                                                    className={`h-full rounded-full transition-all duration-500 ${
-                                                        (selectedUser.completed_tasks_count / selectedUser.tasks_count) === 1 ? 'bg-green-500' : 'bg-foreground'
-                                                    }`}
+                                                    className={`h-full rounded-full transition-all duration-500 ${(selectedUser.completed_tasks_count / selectedUser.tasks_count) === 1 ? 'bg-green-500' : 'bg-foreground'
+                                                        }`}
                                                     style={{
-                                                        width: `${
-                                                            selectedUser.tasks_count > 0
+                                                        width: `${selectedUser.tasks_count > 0
                                                                 ? Math.round((selectedUser.completed_tasks_count / selectedUser.tasks_count) * 100)
                                                                 : 0
-                                                        }%`
+                                                            }%`
                                                     }}
                                                 ></div>
                                             </div>
