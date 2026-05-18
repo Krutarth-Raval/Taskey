@@ -239,7 +239,7 @@ function Tasks() {
                                         </span>
                                         <button
                                             onClick={(e) => handleDeleteTask(e, task)}
-                                            className="p-2 border border-border/40 hover:border-red-500 hover:bg-red-500/10 text-text-secondary hover:text-red-500 rounded-xl transition-all duration-300 flex items-center justify-center cursor-pointer"
+                                            className="p-2 border-2 border-red-500/20 hover:border-red-500 bg-transparent text-red-500 rounded-xl md:rounded-2xl font-black text-base md:text-xl hover:bg-red-500 hover:text-white transition-all duration-300 w-full sm:w-auto flex items-center justify-center gap-2 cursor-pointer"
                                             title="Delete Task"
                                         >
                                             <Trash2 className="w-5 h-5" />
@@ -319,17 +319,17 @@ function Tasks() {
 
                         <div className="flex flex-col sm:flex-row justify-between items-center gap-4 mt-2 md:mt-4">
                             <button
+                                onClick={handleUpdateTask}
+                                className="px-6 py-3 md:px-8 md:py-4 bg-foreground text-background rounded-xl md:rounded-2xl font-black text-base md:text-xl hover:opacity-90 transition-opacity w-full sm:w-auto flex items-center justify-center cursor-pointer"
+                            >
+                                Save Changes
+                            </button>
+                            <button
                                 onClick={(e) => handleDeleteTask(e, selectedTask)}
                                 className="px-6 py-3 md:px-8 md:py-4 border-2 border-red-500/20 hover:border-red-500 bg-transparent text-red-500 rounded-xl md:rounded-2xl font-black text-base md:text-xl hover:bg-red-500 hover:text-white transition-all duration-300 w-full sm:w-auto flex items-center justify-center gap-2 cursor-pointer"
                             >
                                 <Trash2 className="w-5 h-5" />
                                 Delete Task
-                            </button>
-                            <button
-                                onClick={handleUpdateTask}
-                                className="px-6 py-3 md:px-8 md:py-4 bg-foreground text-background rounded-xl md:rounded-2xl font-black text-base md:text-xl hover:opacity-90 transition-opacity w-full sm:w-auto flex items-center justify-center cursor-pointer"
-                            >
-                                Save Changes
                             </button>
                         </div>
                     </div>
