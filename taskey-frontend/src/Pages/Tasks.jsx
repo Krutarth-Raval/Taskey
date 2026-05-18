@@ -233,7 +233,7 @@ function Tasks() {
                                         )}
                                         <span className="text-[10px] md:text-sm font-bold text-text-secondary uppercase tracking-widest mt-1">{task.created_at ? new Date(task.created_at).toLocaleDateString() : task.date}</span>
                                     </div>
-                                    <div className="flex items-center gap-4 shrink-0">
+                                    <div className="flex items-center justify-between gap-4 shrink-0">
                                         <span className={`text-xs md:text-sm font-black uppercase tracking-widest px-3 py-1.5 md:px-4 md:py-2 rounded-lg border-2 ${task.status === 'completed' ? 'border-green-500/50 text-green-500' : 'border-amber-500/50 text-amber-500'}`}>
                                             {task.status}
                                         </span>
