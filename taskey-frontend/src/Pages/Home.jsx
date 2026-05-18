@@ -1,9 +1,24 @@
 import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import MainLayout from "../layouts/MainLayout";
 import { CheckSquare, ShieldCheck, Filter, ArrowRight } from "lucide-react";
+import { useAuth } from "../context/AuthContext";
 
 function Home() {
+    const { user, loading } = useAuth();
+    const navigate = useNavigate();
+    const hasToken = !!localStorage.getItem('token');
+
+    useEffect(() => {
+        if (!loading && user) {
+            if (user.role === 'admin') {
+                navigate('/admin-dashboard', { replace: true });
+            } else {
+                navigate('/user-dashboard', { replace: true });
+            }
+        }
+    }, [user, loading, navigate]);
+
     const words = ["Smarter", "Quicker", "Faster", "Better"];
     const [wordIndex, setWordIndex] = useState(0);
 
@@ -19,6 +34,14 @@ function Home() {
             clearInterval(interval);
         };
     }, []);
+
+    if (loading && hasToken) {
+        return (
+            <div className="min-h-screen w-full flex items-center justify-center bg-background text-foreground">
+                <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-foreground"></div>
+            </div>
+        );
+    }
 
     const features = [
         {
