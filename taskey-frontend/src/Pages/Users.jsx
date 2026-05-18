@@ -217,6 +217,7 @@ function Users() {
                                 <ChevronRight className="w-5 h-5 md:w-6 md:h-6" />
                             </button>
                         </div>
+                    )}
                     {/* User Details Modal */}
                     {selectedUser && (
                         <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 md:p-6 bg-background/90 backdrop-blur-sm transition-opacity">
