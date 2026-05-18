@@ -56,15 +56,15 @@ export const AuthProvider = ({ children }) => {
     };
 
     const logout = async () => {
-        try {
-            await api.post('/logout');
-        } catch (error) {
-            console.error("Error during logout", error);
-        } finally {
-            localStorage.removeItem('token');
-            setUser(null);
-            toast.success('Logged out successfully!');
-        }
+        // Clear local session instantly for a snappy UI transition
+        localStorage.removeItem('token');
+        setUser(null);
+        toast.success('Logged out successfully!');
+
+        // Fire-and-forget the backend token invalidation in the background
+        api.post('/logout').catch((error) => {
+            console.error("Error during backend logout", error);
+        });
     };
 
     return (
