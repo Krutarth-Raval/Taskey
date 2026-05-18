@@ -19,13 +19,14 @@ import ProtectedRoute from './Components/ProtectedRoute'
 
 function App() {
   const location = useLocation();
-  const [toastPosition, setToastPosition] = useState('bottom-right');
+  const [toastPosition, setToastPosition] = useState(() => {
+    return window.innerWidth < 768 ? 'top-center' : 'bottom-right';
+  });
 
   useEffect(() => {
     const updatePosition = () => {
       setToastPosition(window.innerWidth < 768 ? 'top-center' : 'bottom-right');
     };
-    updatePosition();
     window.addEventListener('resize', updatePosition);
     return () => window.removeEventListener('resize', updatePosition);
   }, []);
@@ -65,7 +66,12 @@ function App() {
         <Route path="/users" element={<ProtectedRoute adminOnly={true}><Users /></ProtectedRoute>} />
       </Routes>
       <Toaster
+        key={toastPosition}
         position={toastPosition}
+        containerStyle={{
+          top: toastPosition === 'top-center' ? 40 : 20,
+          bottom: toastPosition === 'bottom-right' ? 40 : 20,
+        }}
         toastOptions={{
           style: {
             background: 'transparent',
