@@ -8,17 +8,26 @@ import api from '../api/axios'
 
 function UserDashboard() {
     const { user } = useAuth();
-    const [stats, setStats] = useState({ total: 0, pending: 0, completed: 0 });
+    const [stats, setStats] = useState(() => {
+        try {
+            const cached = localStorage.getItem('user_stats');
+            return cached ? JSON.parse(cached) : { total: 0, pending: 0, completed: 0 };
+        } catch {
+            return { total: 0, pending: 0, completed: 0 };
+        }
+    });
 
     const fetchStats = async () => {
         try {
             const response = await api.get('/tasks');
             const tasks = response.data.tasks || [];
-            setStats({
+            const newStats = {
                 total: tasks.length,
                 pending: tasks.filter(t => t.status === 'pending').length,
                 completed: tasks.filter(t => t.status === 'completed').length
-            });
+            };
+            setStats(newStats);
+            localStorage.setItem('user_stats', JSON.stringify(newStats));
         } catch (error) {
             console.error("Failed to fetch stats", error);
         }

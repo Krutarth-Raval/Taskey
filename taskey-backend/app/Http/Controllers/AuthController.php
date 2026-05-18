@@ -58,6 +58,14 @@ class AuthController extends Controller
 
         //Get authenticated user
         $user = Auth::user();
+        if ($user->role !== 'admin') {
+            $user->loadCount('tasks');
+            $user->loadCount([
+                'tasks as completed_tasks_count' => function ($query) {
+                    $query->where('status', 'completed');
+                }
+            ]);
+        }
 
         //Generate token
         $token = $user->createToken("auth_token")->plainTextToken;
@@ -84,8 +92,17 @@ class AuthController extends Controller
     //get user
     public function getUser(Request $request)
     {
+        $user = $request->user();
+        if ($user->role !== 'admin') {
+            $user->loadCount('tasks');
+            $user->loadCount([
+                'tasks as completed_tasks_count' => function ($query) {
+                    $query->where('status', 'completed');
+                }
+            ]);
+        }
         return response()->json([
-            "user" => $request->user()
+            "user" => $user
         ]);
     }
 

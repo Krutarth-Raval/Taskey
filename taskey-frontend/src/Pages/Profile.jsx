@@ -9,8 +9,22 @@ import { useNavigate, Link } from 'react-router-dom';
 function Profile() {
     const { user, logout } = useAuth();
     const navigate = useNavigate();
-    const [stats, setStats] = useState({ total: 0, pending: 0, completed: 0 });
-    const [adminStats, setAdminStats] = useState({ total: 0, users: 0, admins: 0 });
+    const [stats, setStats] = useState(() => {
+        try {
+            const cached = localStorage.getItem('user_stats');
+            return cached ? JSON.parse(cached) : { total: 0, pending: 0, completed: 0 };
+        } catch {
+            return { total: 0, pending: 0, completed: 0 };
+        }
+    });
+    const [adminStats, setAdminStats] = useState(() => {
+        try {
+            const cached = localStorage.getItem('admin_stats');
+            return cached ? JSON.parse(cached) : { total: 0, users: 0, admins: 0 };
+        } catch {
+            return { total: 0, users: 0, admins: 0 };
+        }
+    });
     const [showDeleteModal, setShowDeleteModal] = useState(false);
     const [showForgotModal, setShowForgotModal] = useState(false);
     const [showLogoutModal, setShowLogoutModal] = useState(false);
@@ -35,19 +49,23 @@ function Profile() {
                 if (user?.role === 'admin') {
                     const response = await api.get('/admin/users');
                     const users = response.data.users || [];
-                    setAdminStats({
+                    const newAdminStats = {
                         total: users.length,
                         users: users.filter(u => u.role !== 'admin').length,
                         admins: users.filter(u => u.role === 'admin').length
-                    });
+                    };
+                    setAdminStats(newAdminStats);
+                    localStorage.setItem('admin_stats', JSON.stringify(newAdminStats));
                 } else {
                     const response = await api.get('/tasks');
                     const tasks = response.data.tasks || [];
-                    setStats({
+                    const newStats = {
                         total: tasks.length,
                         pending: tasks.filter(t => t.status === 'pending').length,
                         completed: tasks.filter(t => t.status === 'completed').length
-                    });
+                    };
+                    setStats(newStats);
+                    localStorage.setItem('user_stats', JSON.stringify(newStats));
                 }
             } catch (error) {
                 console.error("Failed to fetch stats", error);
