@@ -39,5 +39,6 @@ Route::post("/reset-password", [AuthController::class, "resetPassword"]);
 // Admin Routes
 Route::middleware(['auth:sanctum', 'admin'])->group(function () {
     Route::get('/admin/users', [AdminController::class, 'getUsers']);
+    Route::delete('/admin/users/{id}', [AdminController::class, 'deleteUser']);
 });
 
