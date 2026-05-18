@@ -198,7 +198,7 @@ function Users() {
                                             </div>
                                         ) : (
                                             <div className="w-full sm:w-60 shrink-0 flex sm:justify-end">
-                                                <span className="text-[10px] md:text-xs font-black uppercase tracking-widest text-text-secondary opacity-60">No Tasks Allowed</span>
+                                                <span className="text-[10px] md:text-xs font-black uppercase tracking-widest text-text-secondary opacity-60"></span>
                                             </div>
                                         )}
                                     </div>
@@ -317,8 +317,8 @@ function Users() {
                                                         }`}
                                                     style={{
                                                         width: `${selectedUser.tasks_count > 0
-                                                                ? Math.round((selectedUser.completed_tasks_count / selectedUser.tasks_count) * 100)
-                                                                : 0
+                                                            ? Math.round((selectedUser.completed_tasks_count / selectedUser.tasks_count) * 100)
+                                                            : 0
                                                             }%`
                                                     }}
                                                 ></div>
