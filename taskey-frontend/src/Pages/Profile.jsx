@@ -216,7 +216,7 @@ function Profile() {
                                     <span className="font-bold text-xl underline underline-offset-8">Delete Account</span>
                                 </div>
                                 <div className="flex items-center gap-4 py-3 cursor-pointer text-text-primary w-fit" onClick={() => setShowLogoutModal(true)}>
-                                    <span className="font-bold text-xl underline underline-offset-8">Log Out</span>
+                                    <span className="font-bold text-xl underline underline-offset-8">Sign Out</span>
                                 </div>
                             </div>
                         </div>
@@ -311,7 +311,7 @@ function Profile() {
                         <div className="flex flex-col items-center text-center gap-4">
                             <div className="flex flex-col gap-1">
                                 <h3 className="font-heading text-xl md:text-2xl font-black uppercase tracking-tight text-text-primary">
-                                    Log Out?
+                                    Sign Out?
                                 </h3>
                             </div>
                         </div>
@@ -327,7 +327,7 @@ function Profile() {
                                 onClick={handleLogout}
                                 className="w-full py-3 rounded-xl bg-foreground text-background font-bold text-xs md:text-sm tracking-wider uppercase hover:scale-105 active:scale-95 transition-all duration-300 cursor-pointer shadow-md"
                             >
-                                Yes, Log Out
+                                Yes, Sign Out
                             </button>
                             <button
                                 onClick={() => setShowLogoutModal(false)}

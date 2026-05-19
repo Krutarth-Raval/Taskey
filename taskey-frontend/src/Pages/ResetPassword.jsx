@@ -169,7 +169,7 @@ const ResetPassword = () => {
                 <p className="mt-8 text-center text-text-secondary">
                     Remember your password?{' '}
                     <Link to="/login" className="font-semibold text-foreground hover:text-text-primary hover:underline transition-all duration-300">
-                        Sign in
+                        Sign In
                     </Link>
                 </p>
             </div>

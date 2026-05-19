@@ -41,14 +41,14 @@ function Navbar() {
                 to="/login"
                 className="text-[11px] md:text-xs font-black uppercase tracking-widest text-text-primary hover:opacity-70 transition-opacity px-4 py-2 border border-border/40 rounded-xl"
               >
-                Login
+                Sign In
               </Link>
             ) : (
               <button
                 onClick={() => setShowLogoutModal(true)}
                 className="text-[11px] md:text-xs font-black uppercase tracking-widest text-text-primary hover:opacity-70 transition-opacity cursor-pointer px-4 py-2 border border-border/40 rounded-xl"
               >
-                Logout
+                Sign Out
               </button>
             )}
           </div>
@@ -63,7 +63,7 @@ function Navbar() {
             <div className="flex flex-col items-center text-center gap-4">
               <div className="flex flex-col gap-1">
                 <h3 className="font-heading text-xl md:text-2xl font-black uppercase tracking-tight text-text-primary">
-                  Log Out?
+                  Sign Out?
                 </h3>
               </div>
             </div>
@@ -79,7 +79,7 @@ function Navbar() {
                 onClick={handleLogout}
                 className="w-full py-3 rounded-xl bg-foreground text-background font-bold text-xs md:text-sm tracking-wider uppercase hover:scale-105 active:scale-95 transition-all duration-300 cursor-pointer shadow-md"
               >
-                Yes, Log Out
+                Yes, Sign Out
               </button>
               <button
                 onClick={() => setShowLogoutModal(false)}

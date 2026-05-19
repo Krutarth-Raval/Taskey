@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-import { Mail, Lock, ArrowRight, ArrowLeft } from 'lucide-react'
+import { Mail, Lock, ArrowRight, ArrowLeft, Loader2 } from 'lucide-react'
 import { useAuth } from '../context/AuthContext'
 
 const Login = () => {
     const [isVisible, setIsVisible] = useState(false);
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [isLoading, setIsLoading] = useState(false);
     const { login } = useAuth();
     const navigate = useNavigate();
 
@@ -16,7 +17,9 @@ const Login = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        setIsLoading(true);
         const loggedInUser = await login({ email, password });
+        setIsLoading(false);
         if (loggedInUser) {
             if (loggedInUser.role === 'admin') {
                 navigate('/admin-dashboard');
@@ -35,7 +38,8 @@ const Login = () => {
                 {/* Back Button */}
                 <button
                     onClick={() => navigate("/")}
-                    className="self-start flex items-center gap-2 text-[10px] md:text-xs font-black uppercase tracking-widest text-text-secondary hover:text-text-primary transition-all duration-300 group mb-6"
+                    disabled={isLoading}
+                    className="self-start flex items-center gap-2 text-[10px] md:text-xs font-black uppercase tracking-widest text-text-secondary hover:text-text-primary transition-all duration-300 group mb-6 disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                     <ArrowLeft className="w-3.5 h-3.5 group-hover:-translate-x-1 transition-transform" />
                     Back
@@ -67,7 +71,8 @@ const Login = () => {
                                     value={email}
                                     onChange={(e) => setEmail(e.target.value)}
                                     placeholder="you@example.com"
-                                    className="w-full bg-background border border-border rounded-xl pl-10 pr-4 py-3 text-text-primary placeholder:text-text-secondary focus:outline-none focus:ring-2 focus:ring-foreground/20 focus:border-foreground transition-all duration-300"
+                                    disabled={isLoading}
+                                    className="w-full bg-background border border-border rounded-xl pl-10 pr-4 py-3 text-text-primary placeholder:text-text-secondary focus:outline-none focus:ring-2 focus:ring-foreground/20 focus:border-foreground transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
                                     required
                                 />
                             </div>
@@ -76,7 +81,12 @@ const Login = () => {
                         <div className="space-y-2 group">
                             <div className="flex justify-between items-center ml-1">
                                 <label htmlFor="password" className="text-sm font-medium text-text-primary transition-colors group-focus-within:text-foreground">Password</label>
-                                <Link to="/forgot-password" className="text-xs font-semibold text-text-secondary hover:text-foreground transition-colors">Forgot password?</Link>
+                                <Link 
+                                    to={isLoading ? "#" : "/forgot-password"} 
+                                    className={`text-xs font-semibold text-text-secondary hover:text-foreground transition-colors ${isLoading ? 'pointer-events-none opacity-50' : ''}`}
+                                >
+                                    Forgot password?
+                                </Link>
                             </div>
                             <div className="relative">
                                 <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-text-secondary group-focus-within:text-foreground transition-colors duration-300">
@@ -88,7 +98,8 @@ const Login = () => {
                                     value={password}
                                     onChange={(e) => setPassword(e.target.value)}
                                     placeholder="••••••••"
-                                    className="w-full bg-background border border-border rounded-xl pl-10 pr-4 py-3 text-text-primary placeholder:text-text-secondary focus:outline-none focus:ring-2 focus:ring-foreground/20 focus:border-foreground transition-all duration-300"
+                                    disabled={isLoading}
+                                    className="w-full bg-background border border-border rounded-xl pl-10 pr-4 py-3 text-text-primary placeholder:text-text-secondary focus:outline-none focus:ring-2 focus:ring-foreground/20 focus:border-foreground transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
                                     required
                                 />
                             </div>
@@ -97,10 +108,20 @@ const Login = () => {
                         <div className="pt-2">
                             <button
                                 type="submit"
-                                className="w-full bg-foreground text-background font-semibold rounded-xl py-3 px-4 flex items-center justify-center gap-2 hover:opacity-90 hover:shadow-lg transform hover:-translate-y-0.5 transition-all duration-300 active:scale-95"
+                                disabled={isLoading}
+                                className="w-full bg-foreground text-background font-semibold rounded-xl py-3 px-4 flex items-center justify-center gap-2 hover:opacity-90 hover:shadow-lg transform hover:-translate-y-0.5 transition-all duration-300 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
                             >
-                                Sign In
-                                <ArrowRight size={18} className="transition-transform duration-300 group-hover:translate-x-1" />
+                                {isLoading ? (
+                                    <>
+                                        Signing In...
+                                        <Loader2 size={18} className="animate-spin" />
+                                    </>
+                                ) : (
+                                    <>
+                                        Sign In
+                                        <ArrowRight size={18} className="transition-transform duration-300 group-hover:translate-x-1" />
+                                    </>
+                                )}
                             </button>
                         </div>
                     </div>
@@ -108,7 +129,10 @@ const Login = () => {
 
                 <p className="mt-8 text-center text-text-secondary">
                     Don't have an account?{' '}
-                    <Link to="/register" className="font-semibold text-foreground hover:text-text-primary hover:underline transition-all duration-300">
+                    <Link 
+                        to={isLoading ? "#" : "/register"} 
+                        className={`font-semibold text-foreground hover:text-text-primary hover:underline transition-all duration-300 ${isLoading ? 'pointer-events-none opacity-50' : ''}`}
+                    >
                         Sign up
                     </Link>
                 </p>

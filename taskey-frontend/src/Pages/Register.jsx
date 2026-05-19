@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-import { Mail, Lock, User, ArrowRight, UserPlus, ArrowLeft } from 'lucide-react'
+import { Mail, Lock, User, ArrowRight, UserPlus, ArrowLeft, Loader2 } from 'lucide-react'
 import { useAuth } from '../context/AuthContext'
 import toast from 'react-hot-toast'
 
@@ -10,6 +10,7 @@ function RegisterPage() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
+    const [isLoading, setIsLoading] = useState(false);
     const { register } = useAuth();
     const navigate = useNavigate();
 
@@ -22,7 +23,9 @@ function RegisterPage() {
         if (password !== confirmPassword) {
             return toast.error("Passwords do not match");
         }
+        setIsLoading(true);
         const registeredUser = await register({ name, email, password, password_confirmation: confirmPassword });
+        setIsLoading(false);
         if (registeredUser) {
             if (registeredUser.role === 'admin') {
                 navigate('/admin-dashboard');
@@ -41,7 +44,8 @@ function RegisterPage() {
                 {/* Back Button */}
                 <button
                     onClick={() => navigate("/")}
-                    className="self-start flex items-center gap-2 text-[10px] md:text-xs font-black uppercase tracking-widest text-text-secondary hover:text-text-primary transition-all duration-300 group mb-6"
+                    disabled={isLoading}
+                    className="self-start flex items-center gap-2 text-[10px] md:text-xs font-black uppercase tracking-widest text-text-secondary hover:text-text-primary transition-all duration-300 group mb-6 disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                     <ArrowLeft className="w-3.5 h-3.5 group-hover:-translate-x-1 transition-transform" />
                     Back
@@ -73,7 +77,8 @@ function RegisterPage() {
                                     value={name}
                                     onChange={(e) => setName(e.target.value)}
                                     placeholder="John Doe"
-                                    className="w-full bg-background border border-border rounded-xl pl-10 pr-4 py-3 text-text-primary placeholder:text-text-secondary focus:outline-none focus:ring-2 focus:ring-foreground/20 focus:border-foreground transition-all duration-300"
+                                    disabled={isLoading}
+                                    className="w-full bg-background border border-border rounded-xl pl-10 pr-4 py-3 text-text-primary placeholder:text-text-secondary focus:outline-none focus:ring-2 focus:ring-foreground/20 focus:border-foreground transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
                                     required
                                 />
                             </div>
@@ -91,7 +96,8 @@ function RegisterPage() {
                                     value={email}
                                     onChange={(e) => setEmail(e.target.value)}
                                     placeholder="you@example.com"
-                                    className="w-full bg-background border border-border rounded-xl pl-10 pr-4 py-3 text-text-primary placeholder:text-text-secondary focus:outline-none focus:ring-2 focus:ring-foreground/20 focus:border-foreground transition-all duration-300"
+                                    disabled={isLoading}
+                                    className="w-full bg-background border border-border rounded-xl pl-10 pr-4 py-3 text-text-primary placeholder:text-text-secondary focus:outline-none focus:ring-2 focus:ring-foreground/20 focus:border-foreground transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
                                     required
                                 />
                             </div>
@@ -109,7 +115,8 @@ function RegisterPage() {
                                     value={password}
                                     onChange={(e) => setPassword(e.target.value)}
                                     placeholder="••••••••"
-                                    className="w-full bg-background border border-border rounded-xl pl-10 pr-4 py-3 text-text-primary placeholder:text-text-secondary focus:outline-none focus:ring-2 focus:ring-foreground/20 focus:border-foreground transition-all duration-300"
+                                    disabled={isLoading}
+                                    className="w-full bg-background border border-border rounded-xl pl-10 pr-4 py-3 text-text-primary placeholder:text-text-secondary focus:outline-none focus:ring-2 focus:ring-foreground/20 focus:border-foreground transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
                                     required
                                 />
                             </div>
@@ -127,7 +134,8 @@ function RegisterPage() {
                                     value={confirmPassword}
                                     onChange={(e) => setConfirmPassword(e.target.value)}
                                     placeholder="••••••••"
-                                    className="w-full bg-background border border-border rounded-xl pl-10 pr-4 py-3 text-text-primary placeholder:text-text-secondary focus:outline-none focus:ring-2 focus:ring-foreground/20 focus:border-foreground transition-all duration-300"
+                                    disabled={isLoading}
+                                    className="w-full bg-background border border-border rounded-xl pl-10 pr-4 py-3 text-text-primary placeholder:text-text-secondary focus:outline-none focus:ring-2 focus:ring-foreground/20 focus:border-foreground transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
                                     required
                                 />
                             </div>
@@ -136,21 +144,32 @@ function RegisterPage() {
                         <div className="pt-2">
                             <button
                                 type="submit"
-                                className="w-full bg-foreground text-background font-semibold rounded-xl py-3 px-4 flex items-center justify-center gap-2 hover:opacity-90 hover:shadow-lg transform hover:-translate-y-0.5 transition-all duration-300 active:scale-95"
+                                disabled={isLoading}
+                                className="w-full bg-foreground text-background font-semibold rounded-xl py-3 px-4 flex items-center justify-center gap-2 hover:opacity-90 hover:shadow-lg transform hover:-translate-y-0.5 transition-all duration-300 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
                             >
-                                Create Account
-                                <ArrowRight size={18} className="transition-transform duration-300 group-hover:translate-x-1" />
+                                {isLoading ? (
+                                    <>
+                                        Creating Account...
+                                        <Loader2 size={18} className="animate-spin" />
+                                    </>
+                                ) : (
+                                    <>
+                                        Create Account
+                                        <ArrowRight size={18} className="transition-transform duration-300 group-hover:translate-x-1" />
+                                    </>
+                                )}
                             </button>
-
-
                         </div>
                     </div>
                 </form>
 
                 <p className="mt-8 text-center text-text-secondary">
                     Already have an account?{' '}
-                    <Link to="/login" className="font-semibold text-foreground hover:text-text-primary hover:underline transition-all duration-300">
-                        Log in
+                    <Link 
+                        to={isLoading ? "#" : "/login"} 
+                        className={`font-semibold text-foreground hover:text-text-primary hover:underline transition-all duration-300 ${isLoading ? 'pointer-events-none opacity-50' : ''}`}
+                    >
+                        Sign In
                     </Link>
                 </p>
             </div>
