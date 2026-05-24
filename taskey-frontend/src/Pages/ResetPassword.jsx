@@ -148,15 +148,15 @@ const ResetPassword = () => {
                 ) : (
                     <div className='bg-card rounded-2xl p-8 shadow-xl border border-border flex flex-col gap-6 relative overflow-hidden text-center'>
                         <div className="absolute top-0 left-0 w-full h-1 bg-red-500"></div>
-
+                        
                         <div className="mx-auto w-16 h-16 bg-red-500/10 text-red-500 rounded-full flex items-center justify-center mb-2">
                             <Lock size={32} />
                         </div>
-
+                        
                         <h2 className="font-heading text-2xl font-bold text-text-primary">
                             Invalid Reset Link
                         </h2>
-
+                        
                         <p className="text-text-secondary text-base">
                             This page can only be accessed using a valid reset link sent to your email.
                         </p>
