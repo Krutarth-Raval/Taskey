@@ -8,7 +8,16 @@ export const useAuth = () => useContext(AuthContext);
 
 export const AuthProvider = ({ children }) => {
     const [user, setUser] = useState(null);
-    const [loading, setLoading] = useState(true);
+    const [loading, setLoading] = useState(() => {
+        // Synchronously initialize theme to avoid visual flashing
+        const savedTheme = localStorage.getItem('theme') || 'dark';
+        if (savedTheme === 'dark') {
+            document.documentElement.classList.add('dark');
+        } else {
+            document.documentElement.classList.remove('dark');
+        }
+        return !!localStorage.getItem('token');
+    });
 
     useEffect(() => {
         const fetchUser = async () => {
@@ -69,7 +78,13 @@ export const AuthProvider = ({ children }) => {
 
     return (
         <AuthContext.Provider value={{ user, setUser, login, register, logout, loading }}>
-            {!loading && children}
+            {loading && (
+                <div className="fixed top-0 left-0 right-0 h-1 bg-background/30 backdrop-blur-sm z-50 overflow-hidden">
+                    <div className="route-loader-bar" />
+                </div>
+            )}
+            {children}
         </AuthContext.Provider>
     );
 };
+
