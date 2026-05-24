@@ -20,7 +20,8 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         \Illuminate\Auth\Notifications\ResetPassword::createUrlUsing(function (object $notifiable, string $token) {
-            return 'http://localhost:5173/reset-password?token='.$token.'&email='.$notifiable->getEmailForPasswordReset();
+            $frontendUrl = env('FRONTEND_URL', 'http://localhost:5173');
+            return rtrim($frontendUrl, '/').'/reset-password?token='.$token.'&email='.$notifiable->getEmailForPasswordReset();
         });
 
         \Illuminate\Support\Facades\Mail::extend('brevo', function (array $config) {
