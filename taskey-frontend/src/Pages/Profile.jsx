@@ -210,7 +210,7 @@ function Profile() {
                                     </div>
                                 </div>
                                 <div onClick={() => setShowForgotModal(true)} className="flex items-center gap-4 py-3 cursor-pointer w-fit text-text-primary">
-                                    <span className="font-bold text-xl underline underline-offset-8">Forgot Password</span>
+                                    <span className="font-bold text-xl underline underline-offset-8">Reset Password</span>
                                 </div>
                                 <div className="flex items-center gap-4 py-3 cursor-pointer text-red-500 w-fit" onClick={handleDeleteAccount}>
                                     <span className="font-bold text-xl underline underline-offset-8">Delete Account</span>
@@ -355,7 +355,7 @@ function Profile() {
 
                         {/* Reassurance Message */}
                         <p className="text-xs md:text-sm text-text-secondary leading-relaxed text-center">
-                            You will be redirected to the forgot password page to request a secure password reset link. Do you wish to continue?
+                            You will be redirected to the password reset page to request a secure reset link. Do you wish to continue?
                         </p>
 
                         {/* Action Buttons */}
