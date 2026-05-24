@@ -131,13 +131,13 @@ class AuthController extends Controller
 
         if ($status === Password::RESET_LINK_SENT) {
             return response()->json([
-                "message" => "Reset link sent successfully."
+                "message" => __($status)
             ], 200);
         }
 
         return response()->json([
-            "message" => "Failed to send reset link."
-        ], 500);
+            "message" => __($status)
+        ], 400);
     }
 
     //reset password
