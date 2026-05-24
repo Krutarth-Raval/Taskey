@@ -1,4 +1,3 @@
-// nosemgrep: typescript.react.portability.i18next.jsx-not-internationalized.jsx-not-internationalized
 import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { Mail, ArrowRight } from 'lucide-react'
