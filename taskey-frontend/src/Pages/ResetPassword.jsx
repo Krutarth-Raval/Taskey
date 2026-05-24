@@ -43,7 +43,11 @@ const ResetPassword = () => {
                 password_confirmation: passwordConfirmation
             });
             toast.success(response.data.message || 'Password reset successful!');
-            navigate('/login');
+            if (user) {
+                navigate('/profile');
+            } else {
+                navigate('/login');
+            }
         } catch (error) {
             toast.error(error.response?.data?.message || 'Password reset failed.');
         } finally {
