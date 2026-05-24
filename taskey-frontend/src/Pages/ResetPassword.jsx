@@ -3,8 +3,10 @@ import { Link, useSearchParams, useNavigate } from 'react-router-dom'
 import { Mail, Lock, ArrowRight } from 'lucide-react'
 import api from '../api/axios'
 import toast from 'react-hot-toast'
+import { useAuth } from '../context/AuthContext'
 
 const ResetPassword = () => {
+    const { user } = useAuth();
     const [isVisible, setIsVisible] = useState(false);
     const [searchParams] = useSearchParams();
     const navigate = useNavigate();
@@ -166,12 +168,20 @@ const ResetPassword = () => {
                     </div>
                 )}
 
-                <p className="mt-8 text-center text-text-secondary">
-                    Remember your password?{' '}
-                    <Link to="/login" className="font-semibold text-foreground hover:text-text-primary hover:underline transition-all duration-300">
-                        Sign In
-                    </Link>
-                </p>
+                {user ? (
+                    <p className="mt-8 text-center text-text-secondary">
+                        <Link to="/profile" className="font-semibold text-foreground hover:text-text-primary hover:underline transition-all duration-300">
+                            Back to Profile
+                        </Link>
+                    </p>
+                ) : (
+                    <p className="mt-8 text-center text-text-secondary">
+                        Remember your password?{' '}
+                        <Link to="/login" className="font-semibold text-foreground hover:text-text-primary hover:underline transition-all duration-300">
+                            Sign In
+                        </Link>
+                    </p>
+                )}
             </div>
         </div>
     )
