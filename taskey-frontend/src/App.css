@@ -1,5 +1,4 @@
 @import "tailwindcss";
-@import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700&family=Archivo+Black&display=swap");
 @theme {
   --color-background: #ffffff;
   --color-foreground: #111111;
@@ -37,3 +36,25 @@ body {
     transform: translateX(100%);
   }
 }
+
+@keyframes routeLoader {
+  0% {
+    left: -100%;
+    width: 30%;
+  }
+  50% {
+    width: 60%;
+  }
+  100% {
+    left: 100%;
+    width: 30%;
+  }
+}
+
+.route-loader-bar {
+  position: absolute;
+  height: 100%;
+  background: linear-gradient(90deg, #6366f1, #10b981, #6366f1);
+  animation: routeLoader 1.5s infinite ease-in-out;
+}
+
