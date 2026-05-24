@@ -22,5 +22,15 @@ class AppServiceProvider extends ServiceProvider
         \Illuminate\Auth\Notifications\ResetPassword::createUrlUsing(function (object $notifiable, string $token) {
             return 'http://localhost:5173/reset-password?token='.$token.'&email='.$notifiable->getEmailForPasswordReset();
         });
+
+        \Illuminate\Support\Facades\Mail::extend('brevo', function (array $config) {
+            return (new \Symfony\Component\Mailer\Bridge\Brevo\Transport\BrevoTransportFactory)->create(
+                new \Symfony\Component\Mailer\Transport\Dsn(
+                    'brevo+api',
+                    'default',
+                    $config['key']
+                )
+            );
+        });
     }
 }
