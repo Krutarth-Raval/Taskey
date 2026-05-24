@@ -5,6 +5,21 @@ import api from '../api/axios'
 import toast from 'react-hot-toast'
 import { useAuth } from '../context/AuthContext'
 
+// Constants for UI strings to support internationalization and resolve linter warnings
+const TEXT = {
+    title: "Reset Password",
+    description: "Enter your new credentials below",
+    emailLabel: "Email Address",
+    passwordLabel: "New Password",
+    confirmLabel: "Confirm New Password",
+    invalidTitle: "Invalid Reset Link",
+    invalidDesc: "This page can only be accessed using a valid reset link sent to your email.",
+    requestLink: "Request Reset Link",
+    backToProfile: "Back to Profile",
+    rememberPassword: "Remember your password? ",
+    signIn: "Sign In"
+};
+
 const ResetPassword = () => {
     const { user } = useAuth();
     const [isVisible, setIsVisible] = useState(false);
@@ -65,10 +80,10 @@ const ResetPassword = () => {
                     <>
                         <div className="mb-8 text-center">
                             <h1 className="font-heading text-3xl md:text-4xl font-bold text-text-primary mb-2">
-                                Reset Password
+                                {TEXT.title}
                             </h1>
                             <p className="text-text-secondary text-lg">
-                                Enter your new credentials below
+                                {TEXT.description}
                             </p>
                         </div>
 
@@ -78,7 +93,7 @@ const ResetPassword = () => {
 
                             <div className='flex flex-col gap-5'>
                                 <div className="space-y-2 group">
-                                    <label htmlFor="email" className="text-sm font-medium text-text-primary ml-1 transition-colors group-focus-within:text-foreground">Email Address</label>
+                                    <label htmlFor="email" className="text-sm font-medium text-text-primary ml-1 transition-colors group-focus-within:text-foreground">{TEXT.emailLabel}</label>
                                     <div className="relative">
                                         <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-text-secondary group-focus-within:text-foreground transition-colors duration-300">
                                             <Mail size={18} />
@@ -97,7 +112,7 @@ const ResetPassword = () => {
                                 </div>
 
                                 <div className="space-y-2 group">
-                                    <label htmlFor="password" className="text-sm font-medium text-text-primary ml-1 transition-colors group-focus-within:text-foreground">New Password</label>
+                                    <label htmlFor="password" className="text-sm font-medium text-text-primary ml-1 transition-colors group-focus-within:text-foreground">{TEXT.passwordLabel}</label>
                                     <div className="relative">
                                         <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-text-secondary group-focus-within:text-foreground transition-colors duration-300">
                                             <Lock size={18} />
@@ -115,7 +130,7 @@ const ResetPassword = () => {
                                 </div>
 
                                 <div className="space-y-2 group">
-                                    <label htmlFor="password_confirmation" className="text-sm font-medium text-text-primary ml-1 transition-colors group-focus-within:text-foreground">Confirm New Password</label>
+                                    <label htmlFor="password_confirmation" className="text-sm font-medium text-text-primary ml-1 transition-colors group-focus-within:text-foreground">{TEXT.confirmLabel}</label>
                                     <div className="relative">
                                         <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-text-secondary group-focus-within:text-foreground transition-colors duration-300">
                                             <Lock size={18} />
@@ -138,7 +153,7 @@ const ResetPassword = () => {
                                         disabled={isLoading}
                                         className="w-full bg-foreground text-background font-semibold rounded-xl py-3 px-4 flex items-center justify-center gap-2 hover:opacity-90 hover:shadow-lg transform hover:-translate-y-0.5 transition-all duration-300 active:scale-95 disabled:opacity-50"
                                     >
-                                        {isLoading ? 'Resetting...' : 'Reset Password'}
+                                        {isLoading ? 'Resetting...' : TEXT.title}
                                         <ArrowRight size={18} className="transition-transform duration-300 group-hover:translate-x-1" />
                                     </button>
                                 </div>
@@ -154,11 +169,11 @@ const ResetPassword = () => {
                         </div>
                         
                         <h2 className="font-heading text-2xl font-bold text-text-primary">
-                            Invalid Reset Link
+                            {TEXT.invalidTitle}
                         </h2>
                         
                         <p className="text-text-secondary text-base">
-                            This page can only be accessed using a valid reset link sent to your email.
+                            {TEXT.invalidDesc}
                         </p>
 
                         <div className="flex flex-col gap-3 mt-4">
@@ -166,7 +181,7 @@ const ResetPassword = () => {
                                 to="/forgot-password"
                                 className="w-full bg-foreground text-background font-semibold rounded-xl py-3 px-4 flex items-center justify-center hover:opacity-90 hover:shadow-lg transition-all duration-300"
                             >
-                                Request Reset Link
+                                {TEXT.requestLink}
                             </Link>
                         </div>
                     </div>
@@ -175,14 +190,14 @@ const ResetPassword = () => {
                 {user ? (
                     <p className="mt-8 text-center text-text-secondary">
                         <Link to="/profile" className="font-semibold text-foreground hover:text-text-primary hover:underline transition-all duration-300">
-                            Back to Profile
+                            {TEXT.backToProfile}
                         </Link>
                     </p>
                 ) : (
                     <p className="mt-8 text-center text-text-secondary">
-                        Remember your password?{' '}
+                        {TEXT.rememberPassword}
                         <Link to="/login" className="font-semibold text-foreground hover:text-text-primary hover:underline transition-all duration-300">
-                            Sign In
+                            {TEXT.signIn}
                         </Link>
                     </p>
                 )}
