@@ -3,8 +3,10 @@ import { Link } from 'react-router-dom'
 import { Mail, ArrowRight } from 'lucide-react'
 import api from '../api/axios'
 import toast from 'react-hot-toast'
+import { useAuth } from '../context/AuthContext'
 
 const ForgotPassword = () => {
+    const { user } = useAuth();
     const [isVisible, setIsVisible] = useState(false);
     const [email, setEmail] = useState('');
     const [isLoading, setIsLoading] = useState(false);
@@ -12,7 +14,10 @@ const ForgotPassword = () => {
 
     useEffect(() => {
         setIsVisible(true);
-    }, []);
+        if (user?.email) {
+            setEmail(user.email);
+        }
+    }, [user]);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -38,10 +43,12 @@ const ForgotPassword = () => {
                     <>
                         <div className="mb-8 text-center">
                             <h1 className="font-heading text-3xl md:text-4xl font-bold text-text-primary mb-2">
-                                Forgot Password?
+                                {user ? 'Reset Password' : 'Forgot Password?'}
                             </h1>
                             <p className="text-text-secondary text-lg">
-                                Enter your email to receive a password reset link
+                                {user 
+                                    ? 'Confirm your email to receive a secure password reset link' 
+                                    : 'Enter your email to receive a password reset link'}
                             </p>
                         </div>
 
@@ -62,8 +69,9 @@ const ForgotPassword = () => {
                                             value={email}
                                             onChange={(e) => setEmail(e.target.value)}
                                             placeholder="you@example.com"
-                                            className="w-full bg-background border border-border rounded-xl pl-10 pr-4 py-3 text-text-primary placeholder:text-text-secondary focus:outline-none focus:ring-2 focus:ring-foreground/20 focus:border-foreground transition-all duration-300"
+                                            className={`w-full bg-background border border-border rounded-xl pl-10 pr-4 py-3 text-text-primary placeholder:text-text-secondary focus:outline-none focus:ring-2 focus:ring-foreground/20 focus:border-foreground transition-all duration-300 ${user ? 'opacity-75 cursor-not-allowed' : ''}`}
                                             required
+                                            readOnly={!!user}
                                         />
                                     </div>
                                 </div>
@@ -112,16 +120,32 @@ const ForgotPassword = () => {
                             >
                                 Go to Reset Password
                             </Link>
+                            {user && (
+                                <Link
+                                    to="/profile"
+                                    className="w-full bg-transparent border border-border text-foreground font-semibold rounded-xl py-3 px-4 flex items-center justify-center hover:bg-border transition-all duration-300"
+                                >
+                                    Back to Profile
+                                </Link>
+                            )}
                         </div>
                     </div>
                 )}
 
-                <p className="mt-8 text-center text-text-secondary">
-                    Remember your password?{' '}
-                    <Link to="/login" className="font-semibold text-foreground hover:text-text-primary hover:underline transition-all duration-300">
-                        Sign In
-                    </Link>
-                </p>
+                {user ? (
+                    <p className="mt-8 text-center text-text-secondary">
+                        <Link to="/profile" className="font-semibold text-foreground hover:text-text-primary hover:underline transition-all duration-300">
+                            Back to Profile
+                        </Link>
+                    </p>
+                ) : (
+                    <p className="mt-8 text-center text-text-secondary">
+                        Remember your password?{' '}
+                        <Link to="/login" className="font-semibold text-foreground hover:text-text-primary hover:underline transition-all duration-300">
+                            Sign In
+                        </Link>
+                    </p>
+                )}
             </div>
         </div>
     )
