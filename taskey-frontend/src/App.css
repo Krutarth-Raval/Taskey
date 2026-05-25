@@ -1,6 +1,6 @@
 @import "tailwindcss";
 
-/* Self-hosted fonts to eliminate render-blocking network requests */
+
 @font-face {
   font-family: 'Archivo Black';
   font-style: normal;
