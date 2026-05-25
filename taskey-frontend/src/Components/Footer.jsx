@@ -68,9 +68,9 @@ function Footer() {
 
           <div className="flex flex-row items-center justify-start gap-20">
             <div className="flex flex-col gap-4 md:pl-10">
-              <h4 className="text-[14px] md:text-lg font-black tracking-widest uppercase text-text-secondary">
+              <div className="text-[14px] md:text-lg font-black tracking-widest uppercase text-text-secondary">
                 Product
-              </h4>
+              </div>
               <div className="flex flex-col gap-2.5">
                 <Link
                   to="/"
@@ -96,9 +96,9 @@ function Footer() {
 
             {/* Column 3: Legal & About */}
             <div className="flex flex-col gap-4">
-              <h4 className="text-[14px] md:text-lg font-black tracking-widest uppercase text-text-secondary">
+              <div className="text-[14px] md:text-lg font-black tracking-widest uppercase text-text-secondary">
                 Company
-              </h4>
+              </div>
               <div className="flex flex-col gap-2.5 w-full">
                 <Link
                   to="/about"

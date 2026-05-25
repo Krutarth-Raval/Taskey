@@ -1,4 +1,22 @@
 @import "tailwindcss";
+
+/* Self-hosted fonts to eliminate render-blocking network requests */
+@font-face {
+  font-family: 'Archivo Black';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('/fonts/archivoblack-latin.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Open Sans';
+  font-style: normal;
+  font-weight: 300 800;
+  font-display: swap;
+  src: url('/fonts/opensans-latin.woff2') format('woff2');
+}
+
 @theme {
   --color-background: #ffffff;
   --color-foreground: #111111;
