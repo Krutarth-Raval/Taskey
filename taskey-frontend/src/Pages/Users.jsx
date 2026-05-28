@@ -5,6 +5,8 @@ import { useAuth } from '../context/AuthContext';
 import api from '../api/axios';
 import { Search, ChevronDown, ChevronLeft, ChevronRight, Calendar, Shield, Users as UsersIcon, X, Trash2, Lock } from 'lucide-react';
 import toast from 'react-hot-toast';
+import noUsersIllustration from '../assets/no-users.png';
+
 
 function Users() {
     const { user } = useAuth();
@@ -148,7 +150,21 @@ function Users() {
                         )}
 
                         {!isLoading && displayedUsers.length === 0 && (
-                            <p className="text-center text-text-secondary text-xl font-bold mt-10">No users found.</p>
+                            <div className="flex flex-col items-center justify-center text-center py-12 md:py-20 animate-in fade-in slide-in-from-bottom-4 duration-500">
+                                <img 
+                                    src={noUsersIllustration} 
+                                    alt="No users found" 
+                                    className="w-64 h-64 md:w-80 md:h-80 object-contain mb-6 select-none opacity-90"
+                                />
+                                <h3 className="text-xl md:text-2xl font-black text-text-primary mb-2 uppercase tracking-wide">
+                                    {usersList.length === 0 ? "No registered users" : "No users found"}
+                                </h3>
+                                <p className="text-sm md:text-base text-text-secondary max-w-sm leading-relaxed">
+                                    {usersList.length === 0 
+                                        ? "There are no user accounts registered in the system yet." 
+                                        : `No accounts matching "${roleFilter === 'all' ? 'All Roles' : roleFilter === 'admin' ? 'Admins' : 'Members'}" were found.`}
+                                </p>
+                            </div>
                         )}
 
                         {!isLoading && displayedUsers.length > 0 &&

@@ -4,6 +4,8 @@ import FloatingNavbar from "../Components/UI/FloatingNavbar";
 import { Search, X, CheckCircle2, Circle, ChevronLeft, ChevronRight, ChevronDown, Plus, Trash2 } from 'lucide-react';
 import api from '../api/axios';
 import toast from 'react-hot-toast';
+import noTasksIllustration from '../assets/no-tasks.png';
+
 
 function Tasks() {
     // Tasks Data
@@ -11,6 +13,7 @@ function Tasks() {
     const [isLoading, setIsLoading] = useState(true);
     const [taskToDelete, setTaskToDelete] = useState(null);
     const [isDeleting, setIsDeleting] = useState(false);
+    const [isSaving, setIsSaving] = useState(false);
 
     const capitalizeFirstLetter = (str) => {
         if (!str) return "";
@@ -82,6 +85,8 @@ function Tasks() {
     };
 
     const handleUpdateTask = async () => {
+        if (isSaving) return;
+        setIsSaving(true);
         try {
             await api.patch(`/tasks/${selectedTask.id}`, selectedTask);
             setTasks(prev => prev.map(t => t.id === selectedTask.id ? selectedTask : t));
@@ -89,6 +94,8 @@ function Tasks() {
             toast.success("Task updated successfully");
         } catch (error) {
             toast.error("Failed to update task");
+        } finally {
+            setIsSaving(false);
         }
     };
 
@@ -214,7 +221,21 @@ function Tasks() {
                                 <div className="animate-spin rounded-full h-10 w-10 border-t-2 border-b-2 border-foreground"></div>
                             </div>
                         ) : displayedTasks.length === 0 ? (
-                            <p className="text-center text-text-secondary text-xl font-bold mt-10">No tasks found.</p>
+                            <div className="flex flex-col items-center justify-center text-center py-12 md:py-20 animate-in fade-in slide-in-from-bottom-4 duration-500">
+                                <img 
+                                    src={noTasksIllustration} 
+                                    alt="No tasks found" 
+                                    className="w-64 h-64 md:w-80 md:h-80 object-contain mb-6 select-none opacity-90"
+                                />
+                                <h3 className="text-xl md:text-2xl font-black text-text-primary mb-2 uppercase tracking-wide">
+                                    {tasks.length === 0 ? "Start your journey" : "No results found"}
+                                </h3>
+                                <p className="text-sm md:text-base text-text-secondary max-w-sm leading-relaxed">
+                                    {tasks.length === 0 
+                                        ? "You don't have any tasks yet. Create a new task to get started and stay productive!" 
+                                        : "We couldn't find any tasks matching your filters. Try adjusting your search or filters."}
+                                </p>
+                            </div>
                         ) : (
                             displayedTasks.map(task => (
                                 <div
@@ -320,9 +341,15 @@ function Tasks() {
                         <div className="flex flex-col sm:flex-row justify-between items-center gap-4 mt-2 md:mt-4">
                             <button
                                 onClick={handleUpdateTask}
-                                className="px-6 py-3 md:px-8 md:py-4 bg-foreground text-background rounded-xl md:rounded-2xl font-black text-base md:text-xl hover:opacity-90 transition-opacity w-full sm:w-auto flex items-center justify-center cursor-pointer"
+                                disabled={isSaving}
+                                className="px-6 py-3 md:px-8 md:py-4 bg-foreground text-background rounded-xl md:rounded-2xl font-black text-base md:text-xl hover:opacity-90 transition-opacity w-full sm:w-auto flex items-center justify-center cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed gap-2"
                             >
-                                Save Changes
+                                {isSaving ? (
+                                    <>
+                                        <div className="animate-spin rounded-full h-4 w-4 border-2 border-background border-t-transparent"></div>
+                                        Saving...
+                                    </>
+                                ) : "Save Changes"}
                             </button>
                             <button
                                 onClick={(e) => handleDeleteTask(e, selectedTask)}
