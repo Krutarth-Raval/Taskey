@@ -5,6 +5,9 @@ import api from '../api/axios'
 import toast from 'react-hot-toast'
 import { useAuth } from '../context/AuthContext'
 
+// Reusable Components
+import InputField from '../Components/UI/InputField'
+
 const ResetPassword = () => {
     const { user } = useAuth();
     const [isVisible, setIsVisible] = useState(false);
@@ -77,60 +80,41 @@ const ResetPassword = () => {
                             <div className="absolute top-0 left-0 w-full h-1 bg-foreground"></div>
 
                             <div className='flex flex-col gap-5'>
-                                <div className="space-y-2 group">
-                                    <label htmlFor="email" className="text-sm font-medium text-text-primary ml-1 transition-colors group-focus-within:text-foreground">Email Address</label>
-                                    <div className="relative">
-                                        <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-text-secondary group-focus-within:text-foreground transition-colors duration-300">
-                                            <Mail size={18} />
-                                        </div>
-                                        <input
-                                            id="email"
-                                            type="email"
-                                            value={email}
-                                            onChange={(e) => setEmail(e.target.value)}
-                                            placeholder="you@example.com"
-                                            className="w-full bg-background border border-border rounded-xl pl-10 pr-4 py-3 text-text-primary placeholder:text-text-secondary focus:outline-none focus:ring-2 focus:ring-foreground/20 focus:border-foreground transition-all duration-300"
-                                            required
-                                            readOnly={!!searchParams.get('email')}
-                                        />
-                                    </div>
-                                </div>
+                                <InputField
+                                    id="email"
+                                    type="email"
+                                    label="Email Address"
+                                    value={email}
+                                    onChange={(e) => setEmail(e.target.value)}
+                                    placeholder="you@example.com"
+                                    disabled={isLoading || !!searchParams.get('email')}
+                                    required={true}
+                                    icon={Mail}
+                                />
 
-                                <div className="space-y-2 group">
-                                    <label htmlFor="password" className="text-sm font-medium text-text-primary ml-1 transition-colors group-focus-within:text-foreground">New Password</label>
-                                    <div className="relative">
-                                        <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-text-secondary group-focus-within:text-foreground transition-colors duration-300">
-                                            <Lock size={18} />
-                                        </div>
-                                        <input
-                                            id="password"
-                                            type="password"
-                                            value={password}
-                                            onChange={(e) => setPassword(e.target.value)}
-                                            placeholder="••••••••"
-                                            className="w-full bg-background border border-border rounded-xl pl-10 pr-4 py-3 text-text-primary placeholder:text-text-secondary focus:outline-none focus:ring-2 focus:ring-foreground/20 focus:border-foreground transition-all duration-300"
-                                            required
-                                        />
-                                    </div>
-                                </div>
+                                <InputField
+                                    id="password"
+                                    type="password"
+                                    label="New Password"
+                                    value={password}
+                                    onChange={(e) => setPassword(e.target.value)}
+                                    placeholder="••••••••"
+                                    disabled={isLoading}
+                                    required={true}
+                                    icon={Lock}
+                                />
 
-                                <div className="space-y-2 group">
-                                    <label htmlFor="password_confirmation" className="text-sm font-medium text-text-primary ml-1 transition-colors group-focus-within:text-foreground">Confirm New Password</label>
-                                    <div className="relative">
-                                        <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-text-secondary group-focus-within:text-foreground transition-colors duration-300">
-                                            <Lock size={18} />
-                                        </div>
-                                        <input
-                                            id="password_confirmation"
-                                            type="password"
-                                            value={passwordConfirmation}
-                                            onChange={(e) => setPasswordConfirmation(e.target.value)}
-                                            placeholder="••••••••"
-                                            className="w-full bg-background border border-border rounded-xl pl-10 pr-4 py-3 text-text-primary placeholder:text-text-secondary focus:outline-none focus:ring-2 focus:ring-foreground/20 focus:border-foreground transition-all duration-300"
-                                            required
-                                        />
-                                    </div>
-                                </div>
+                                <InputField
+                                    id="password_confirmation"
+                                    type="password"
+                                    label="Confirm New Password"
+                                    value={passwordConfirmation}
+                                    onChange={(e) => setPasswordConfirmation(e.target.value)}
+                                    placeholder="••••••••"
+                                    disabled={isLoading}
+                                    required={true}
+                                    icon={Lock}
+                                />
 
                                 <div className="pt-2">
                                     <button

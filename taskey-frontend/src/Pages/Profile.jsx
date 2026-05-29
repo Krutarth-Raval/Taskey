@@ -6,6 +6,9 @@ import api from '../api/axios';
 import toast from 'react-hot-toast';
 import { useNavigate, Link } from 'react-router-dom';
 
+// Reusable Components
+import ConfirmationModal from '../Components/UI/ConfirmationModal';
+
 function Profile() {
     const { user, logout } = useAuth();
     const navigate = useNavigate();
@@ -260,125 +263,42 @@ function Profile() {
                 </div>
             </div>
 
-            {/* Custom Premium Delete Reassurance Modal */}
-            {showDeleteModal && (
-                <div className="fixed inset-0 z-[100] flex items-center justify-center bg-background/80 backdrop-blur-md transition-all duration-300">
-                    <div className="bg-card border-2 border-border p-6 md:p-8 rounded-3xl max-w-md w-full mx-4 shadow-2xl flex flex-col gap-6 relative select-none animate-in fade-in zoom-in-95 duration-200">
-                        {/* Warning Header */}
-                        <div className="flex flex-col items-center text-center gap-4">
+            {/* Delete Account Confirmation Modal */}
+            <ConfirmationModal
+                isOpen={showDeleteModal}
+                onClose={() => setShowDeleteModal(false)}
+                onConfirm={confirmDeleteAccount}
+                title="Delete Account?"
+                message="Are you absolutely sure? This will permanently delete your profile, credentials, and all tasks from our databases. This action cannot be undone."
+                confirmText="Yes, Delete Account"
+                isDanger={true}
+                isLoading={isDeleting}
+            />
 
-                            <div className="flex flex-col gap-1">
+            {/* Logout Confirmation Modal */}
+            <ConfirmationModal
+                isOpen={showLogoutModal}
+                onClose={() => setShowLogoutModal(false)}
+                onConfirm={handleLogout}
+                title="Sign Out?"
+                message="Are you sure you want to end your current session? You will need to sign back in to access your task dashboard."
+                confirmText="Yes, Sign Out"
+                isDanger={false}
+            />
 
-                                <h3 className="font-heading text-xl md:text-2xl font-black uppercase tracking-tight text-text-primary">
-                                    Delete Account?
-                                </h3>
-                            </div>
-                        </div>
-
-                        {/* Reassurance Message */}
-                        <p className="text-xs md:text-sm text-text-secondary leading-relaxed text-center">
-                            Are you absolutely sure? This will permanently delete your profile, credentials, and all tasks from our databases. <strong>This action cannot be undone.</strong>
-                        </p>
-
-                        {/* Action Buttons */}
-                        <div className="flex flex-col gap-2 mt-2">
-                            <button
-                                onClick={confirmDeleteAccount}
-                                disabled={isDeleting}
-                                className="w-full py-3 rounded-xl bg-red-500 text-white font-bold text-xs md:text-sm tracking-wider uppercase hover:bg-red-600 transition-colors duration-300 disabled:opacity-50 flex items-center justify-center gap-2 cursor-pointer shadow-md"
-                            >
-                                {isDeleting ? (
-                                    <div className="animate-spin rounded-full h-4 w-4 border-2 border-white border-t-transparent"></div>
-                                ) : "Yes, Delete Account"}
-                            </button>
-                            <button
-                                onClick={() => setShowDeleteModal(false)}
-                                disabled={isDeleting}
-                                className="w-full py-3 rounded-xl bg-transparent border border-border/60 hover:bg-border/20 text-text-primary font-bold text-xs md:text-sm tracking-wider uppercase transition-colors duration-300 disabled:opacity-50 cursor-pointer"
-                            >
-                                Cancel
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            )}
-
-            {/* Custom Premium Logout Reassurance Modal */}
-            {showLogoutModal && (
-                <div className="fixed inset-0 z-[100] flex items-center justify-center bg-background/80 backdrop-blur-md transition-all duration-300">
-                    <div className="bg-card border-2 border-border p-6 md:p-8 rounded-3xl max-w-md w-full mx-4 shadow-2xl flex flex-col gap-6 relative select-none animate-in fade-in zoom-in-95 duration-200">
-                        {/* Header */}
-                        <div className="flex flex-col items-center text-center gap-4">
-                            <div className="flex flex-col gap-1">
-                                <h3 className="font-heading text-xl md:text-2xl font-black uppercase tracking-tight text-text-primary">
-                                    Sign Out?
-                                </h3>
-                            </div>
-                        </div>
-
-                        {/* Reassurance Message */}
-                        <p className="text-xs md:text-sm text-text-secondary leading-relaxed text-center">
-                            Are you sure you want to end your current session? You will need to sign back in to access your task dashboard.
-                        </p>
-
-                        {/* Action Buttons */}
-                        <div className="flex flex-col gap-2 mt-2">
-                            <button
-                                onClick={handleLogout}
-                                className="w-full py-3 rounded-xl bg-foreground text-background font-bold text-xs md:text-sm tracking-wider uppercase hover:scale-105 active:scale-95 transition-all duration-300 cursor-pointer shadow-md"
-                            >
-                                Yes, Sign Out
-                            </button>
-                            <button
-                                onClick={() => setShowLogoutModal(false)}
-                                className="w-full py-3 rounded-xl bg-transparent border border-border/60 hover:bg-border/20 text-text-primary font-bold text-xs md:text-sm tracking-wider uppercase transition-colors duration-300 cursor-pointer"
-                            >
-                                Cancel
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            )}
-
-            {/* Custom Premium Forgot Password Reassurance Modal */}
-            {showForgotModal && (
-                <div className="fixed inset-0 z-[100] flex items-center justify-center bg-background/80 backdrop-blur-md transition-all duration-300">
-                    <div className="bg-card border-2 border-border p-6 md:p-8 rounded-3xl max-w-md w-full mx-4 shadow-2xl flex flex-col gap-6 relative select-none animate-in fade-in zoom-in-95 duration-200">
-                        {/* Header */}
-                        <div className="flex flex-col items-center text-center gap-4">
-                            <div className="flex flex-col gap-1">
-                                <h3 className="font-heading text-xl md:text-2xl font-black uppercase tracking-tight text-text-primary">
-                                    Reset Password?
-                                </h3>
-                            </div>
-                        </div>
-
-                        {/* Reassurance Message */}
-                        <p className="text-xs md:text-sm text-text-secondary leading-relaxed text-center">
-                            You will be redirected to the password reset page to request a secure reset link. Do you wish to continue?
-                        </p>
-
-                        {/* Action Buttons */}
-                        <div className="flex flex-col gap-2 mt-2">
-                            <button
-                                onClick={() => {
-                                    setShowForgotModal(false);
-                                    navigate('/forgot-password');
-                                }}
-                                className="w-full py-3 rounded-xl bg-foreground text-background font-bold text-xs md:text-sm tracking-wider uppercase hover:scale-105 active:scale-95 transition-all duration-300 cursor-pointer shadow-md"
-                            >
-                                Yes, Continue
-                            </button>
-                            <button
-                                onClick={() => setShowForgotModal(false)}
-                                className="w-full py-3 rounded-xl bg-transparent border border-border/60 hover:bg-border/20 text-text-primary font-bold text-xs md:text-sm tracking-wider uppercase transition-colors duration-300 cursor-pointer"
-                            >
-                                Cancel
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            )}
+            {/* Reset Password Confirmation Modal */}
+            <ConfirmationModal
+                isOpen={showForgotModal}
+                onClose={() => setShowForgotModal(false)}
+                onConfirm={() => {
+                    setShowForgotModal(false);
+                    navigate('/forgot-password');
+                }}
+                title="Reset Password?"
+                message="You will be redirected to the password reset page to request a secure reset link. Do you wish to continue?"
+                confirmText="Yes, Continue"
+                isDanger={false}
+            />
         </MainLayout>
     );
 }

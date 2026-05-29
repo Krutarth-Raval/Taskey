@@ -1,8 +1,11 @@
 import React, { useState, useEffect } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-import { Mail, Lock, User, ArrowRight, UserPlus, ArrowLeft, Loader2 } from 'lucide-react'
+import { Mail, Lock, User, ArrowRight, ArrowLeft, Loader2 } from 'lucide-react'
 import { useAuth } from '../context/AuthContext'
 import toast from 'react-hot-toast'
+
+// Reusable Components
+import InputField from '../Components/UI/InputField'
 
 function RegisterPage() {
     const [isVisible, setIsVisible] = useState(false);
@@ -65,81 +68,53 @@ function RegisterPage() {
                     <div className="absolute top-0 left-0 w-full h-1 bg-foreground"></div>
 
                     <div className='flex flex-col gap-5'>
-                        <div className="space-y-2 group">
-                            <label htmlFor="name" className="text-sm font-medium text-text-primary ml-1 transition-colors group-focus-within:text-foreground">Full Name</label>
-                            <div className="relative">
-                                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-text-secondary group-focus-within:text-foreground transition-colors duration-300">
-                                    <User size={18} />
-                                </div>
-                                <input
-                                    id="name"
-                                    type="text"
-                                    value={name}
-                                    onChange={(e) => setName(e.target.value)}
-                                    placeholder="John Doe"
-                                    disabled={isLoading}
-                                    className="w-full bg-background border border-border rounded-xl pl-10 pr-4 py-3 text-text-primary placeholder:text-text-secondary focus:outline-none focus:ring-2 focus:ring-foreground/20 focus:border-foreground transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
-                                    required
-                                />
-                            </div>
-                        </div>
+                        <InputField
+                            id="name"
+                            type="text"
+                            label="Full Name"
+                            value={name}
+                            onChange={(e) => setName(e.target.value)}
+                            placeholder="John Doe"
+                            disabled={isLoading}
+                            required
+                            icon={User}
+                        />
 
-                        <div className="space-y-2 group">
-                            <label htmlFor="email" className="text-sm font-medium text-text-primary ml-1 transition-colors group-focus-within:text-foreground">Email Address</label>
-                            <div className="relative">
-                                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-text-secondary group-focus-within:text-foreground transition-colors duration-300">
-                                    <Mail size={18} />
-                                </div>
-                                <input
-                                    id="email"
-                                    type="email"
-                                    value={email}
-                                    onChange={(e) => setEmail(e.target.value)}
-                                    placeholder="you@example.com"
-                                    disabled={isLoading}
-                                    className="w-full bg-background border border-border rounded-xl pl-10 pr-4 py-3 text-text-primary placeholder:text-text-secondary focus:outline-none focus:ring-2 focus:ring-foreground/20 focus:border-foreground transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
-                                    required
-                                />
-                            </div>
-                        </div>
+                        <InputField
+                            id="email"
+                            type="email"
+                            label="Email Address"
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
+                            placeholder="you@example.com"
+                            disabled={isLoading}
+                            required
+                            icon={Mail}
+                        />
 
-                        <div className="space-y-2 group">
-                            <label htmlFor="password" className="text-sm font-medium text-text-primary ml-1 transition-colors group-focus-within:text-foreground">Password</label>
-                            <div className="relative">
-                                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-text-secondary group-focus-within:text-foreground transition-colors duration-300">
-                                    <Lock size={18} />
-                                </div>
-                                <input
-                                    id="password"
-                                    type="password"
-                                    value={password}
-                                    onChange={(e) => setPassword(e.target.value)}
-                                    placeholder="••••••••"
-                                    disabled={isLoading}
-                                    className="w-full bg-background border border-border rounded-xl pl-10 pr-4 py-3 text-text-primary placeholder:text-text-secondary focus:outline-none focus:ring-2 focus:ring-foreground/20 focus:border-foreground transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
-                                    required
-                                />
-                            </div>
-                        </div>
+                        <InputField
+                            id="password"
+                            type="password"
+                            label="Password"
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
+                            placeholder="••••••••"
+                            disabled={isLoading}
+                            required
+                            icon={Lock}
+                        />
 
-                        <div className="space-y-2 group">
-                            <label htmlFor="confirm-password" className="text-sm font-medium text-text-primary ml-1 transition-colors group-focus-within:text-foreground">Confirm Password</label>
-                            <div className="relative">
-                                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-text-secondary group-focus-within:text-foreground transition-colors duration-300">
-                                    <Lock size={18} />
-                                </div>
-                                <input
-                                    id="confirm-password"
-                                    type="password"
-                                    value={confirmPassword}
-                                    onChange={(e) => setConfirmPassword(e.target.value)}
-                                    placeholder="••••••••"
-                                    disabled={isLoading}
-                                    className="w-full bg-background border border-border rounded-xl pl-10 pr-4 py-3 text-text-primary placeholder:text-text-secondary focus:outline-none focus:ring-2 focus:ring-foreground/20 focus:border-foreground transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
-                                    required
-                                />
-                            </div>
-                        </div>
+                        <InputField
+                            id="confirm-password"
+                            type="password"
+                            label="Confirm Password"
+                            value={confirmPassword}
+                            onChange={(e) => setConfirmPassword(e.target.value)}
+                            placeholder="••••••••"
+                            disabled={isLoading}
+                            required
+                            icon={Lock}
+                        />
 
                         <div className="pt-2">
                             <button
@@ -177,4 +152,4 @@ function RegisterPage() {
     )
 }
 
-export default RegisterPage
+export default RegisterPage;

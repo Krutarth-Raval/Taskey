@@ -3,6 +3,9 @@ import { Link, useNavigate } from 'react-router-dom'
 import { Mail, Lock, ArrowRight, ArrowLeft, Loader2 } from 'lucide-react'
 import { useAuth } from '../context/AuthContext'
 
+// Reusable Components
+import InputField from '../Components/UI/InputField'
+
 const Login = () => {
     const [isVisible, setIsVisible] = useState(false);
     const [email, setEmail] = useState('');
@@ -59,51 +62,37 @@ const Login = () => {
                     <div className="absolute top-0 left-0 w-full h-1 bg-foreground"></div>
 
                     <div className='flex flex-col gap-5'>
-                        <div className="space-y-2 group">
-                            <label htmlFor="email" className="text-sm font-medium text-text-primary ml-1 transition-colors group-focus-within:text-foreground">Email Address</label>
-                            <div className="relative">
-                                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-text-secondary group-focus-within:text-foreground transition-colors duration-300">
-                                    <Mail size={18} />
-                                </div>
-                                <input
-                                    id="email"
-                                    type="email"
-                                    value={email}
-                                    onChange={(e) => setEmail(e.target.value)}
-                                    placeholder="you@example.com"
-                                    disabled={isLoading}
-                                    className="w-full bg-background border border-border rounded-xl pl-10 pr-4 py-3 text-text-primary placeholder:text-text-secondary focus:outline-none focus:ring-2 focus:ring-foreground/20 focus:border-foreground transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
-                                    required
-                                />
-                            </div>
-                        </div>
+                        <InputField
+                            id="email"
+                            type="email"
+                            label="Email Address"
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
+                            placeholder="you@example.com"
+                            disabled={isLoading}
+                            required
+                            icon={Mail}
+                        />
 
-                        <div className="space-y-2 group">
-                            <div className="flex justify-between items-center ml-1">
-                                <label htmlFor="password" className="text-sm font-medium text-text-primary transition-colors group-focus-within:text-foreground">Password</label>
+                        <InputField
+                            id="password"
+                            type="password"
+                            label="Password"
+                            rightLabel={
                                 <Link 
                                     to={isLoading ? "#" : "/forgot-password"} 
                                     className={`text-xs font-semibold text-text-secondary hover:text-foreground transition-colors ${isLoading ? 'pointer-events-none opacity-50' : ''}`}
                                 >
                                     Forgot password?
                                 </Link>
-                            </div>
-                            <div className="relative">
-                                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-text-secondary group-focus-within:text-foreground transition-colors duration-300">
-                                    <Lock size={18} />
-                                </div>
-                                <input
-                                    id="password"
-                                    type="password"
-                                    value={password}
-                                    onChange={(e) => setPassword(e.target.value)}
-                                    placeholder="••••••••"
-                                    disabled={isLoading}
-                                    className="w-full bg-background border border-border rounded-xl pl-10 pr-4 py-3 text-text-primary placeholder:text-text-secondary focus:outline-none focus:ring-2 focus:ring-foreground/20 focus:border-foreground transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
-                                    required
-                                />
-                            </div>
-                        </div>
+                            }
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
+                            placeholder="••••••••"
+                            disabled={isLoading}
+                            required
+                            icon={Lock}
+                        />
 
                         <div className="pt-2">
                             <button
