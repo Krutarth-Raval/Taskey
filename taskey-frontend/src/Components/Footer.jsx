@@ -20,9 +20,10 @@ function Footer() {
             <Link
               to="/"
               onClick={handleHomeClick}
-              className="text-2xl md:text-3xl font-black uppercase tracking-[0.2em] text-text-primary hover:opacity-75 transition-opacity w-fit"
+              className="flex items-center gap-3 text-2xl md:text-3xl font-black uppercase tracking-[0.2em] text-text-primary hover:opacity-75 transition-opacity w-fit"
             >
-              Taskey
+              <img src="/logo.png" alt="Taskey Logo" className="h-8 md:h-9 w-auto object-contain theme-logo" />
+              <span>Taskey</span>
             </Link>
             <p className="text-xs md:text-sm text-text-secondary leading-relaxed max-w-xs">
               A premium, minimalist task manager designed to help you organize work, track progress, and elevate daily focus.

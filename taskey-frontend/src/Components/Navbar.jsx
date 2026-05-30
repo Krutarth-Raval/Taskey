@@ -30,9 +30,9 @@ function Navbar() {
           <Link
             to="/"
             onClick={handleHomeClick}
-            className="text-lg md:text-xl font-black uppercase tracking-[0.2em] text-text-primary hover:opacity-75 transition-opacity"
+            className="flex items-center hover:opacity-75 transition-opacity"
           >
-            Taskey
+            <img src="/logo.png" alt="Taskey Logo" className="h-8 md:h-9 w-auto object-contain theme-logo" />
           </Link>
 
           <div className="flex items-center gap-4">
